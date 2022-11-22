@@ -6,6 +6,7 @@
 bool fichierTrouvable(FILE* fichier);
 bool fichierPGM(char extensionP, int extension2);
 void affichageTableau(int tableau[], int dim);
+int maxListe(int tableau[], int dim);
 
 /*Permet de vérifier si le fichier existe*/
 bool fichierTrouvable(FILE* fichier){
@@ -33,6 +34,16 @@ void affichageTableau(int tableau[], int dim){
     }
 }
 
+int maxTableau(int tableau[], int dim){
+    int a = tableau[0];
+    for (int i = 0; i<dim; i++){
+        if (tableau[i] > a) {
+            a = tableau[i];
+        }
+    }
+    return a;
+}
+
 int main()
 {
     char extensionP;
@@ -41,7 +52,7 @@ int main()
     int niveauActuel;
     int longueurLargeur[2];
 
-    FILE* fichier = fopen("tigre.pgm","r");
+    FILE* fichier = fopen("iogs.pgm","r");
 
     if (!fichierTrouvable(fichier)){
         printf("Fichier introuvable.\n");
@@ -58,7 +69,7 @@ int main()
         fscanf(fichier,"%d",&longueurLargeur[i]);
     }
 
-    int dim = longueurLargeur[0]*longueurLargeur[1];
+    int dim = longueurLargeur[0]*longueurLargeur[1]; // Colone * Ligne
 
     fscanf(fichier,"%d",&niveauMax);
 
@@ -74,15 +85,15 @@ int main()
         comptage[niveauActuel]++;
     }
 
-    printf("%d", comptage[0]);
+    /*On débute avec un dim, à remplacer par max*/
+    int colone_diag = maxTableau(comptage, niveauMax + 1); //256 nuances de gris
 
-    /*On dbute avec un dim*/
-    int colone_diag = dim;
+    printf("Debug: Nombre de colonne %d\n", colone_diag);
 
     affichageTableau(comptage, niveauMax +1);
 
     FILE* diagramme = fopen("diagramme.pgm","w");
-    fprintf(diagramme, "P2\n256 %d\n255\n",colone_diag);
+    fprintf(diagramme, "P2\n%d %d\n255\n",colone_diag, niveauMax +1); //colonne/ligne
     for (int i = 0; i<dim; i++) {
         if (comptage[i] == 0) {
             for (int j = 0; j<colone_diag; j++) {
