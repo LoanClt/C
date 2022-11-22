@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h> /*Permet de créer des fonctions de type bool*/
-#include "koolplot.h"
 
 
 bool fichierTrouvable(FILE* fichier);
@@ -78,8 +77,4 @@ int main()
     printf("%d", comptage[0]);
 
     affichageTableau(comptage, niveauMax +1);
-
-    Plotdata x(-3.0, 3.0), y = sin(x) - 0.5*x;
-    plot(x, y);
-    return 0;
 }
