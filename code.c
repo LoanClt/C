@@ -41,7 +41,7 @@ int main()
     int niveauActuel;
     int longueurLargeur[2];
 
-    FILE* fichier = fopen("damier.pgm","r");
+    FILE* fichier = fopen("tigre.pgm","r");
 
     if (!fichierTrouvable(fichier)){
         printf("Fichier introuvable.\n");
@@ -76,5 +76,28 @@ int main()
 
     printf("%d", comptage[0]);
 
+    /*On dbute avec un dim*/
+    int colone_diag = dim;
+
     affichageTableau(comptage, niveauMax +1);
+
+    FILE* diagramme = fopen("diagramme.pgm","w");
+    fprintf(diagramme, "P2\n256 %d\n255\n",colone_diag);
+    for (int i = 0; i<dim; i++) {
+        if (comptage[i] == 0) {
+            for (int j = 0; j<colone_diag; j++) {
+                fprintf(diagramme, " 255 ");
+            }
+            fprintf(diagramme, "\n");
+        } else {
+            for (int j = 0; j< colone_diag; j++) {
+                    if (j < comptage[i]) {
+                        fprintf(diagramme, " 0 ");
+                    } else {
+                        fprintf(diagramme, " 255 ");
+                    }
+            }
+            fprintf(diagramme, "\n");
+        }
+    }
 }
