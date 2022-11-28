@@ -91,14 +91,14 @@ int main()
     int niveauActuel;
     int longueurLargeur[2];
 
-    printf(" _   _ _     _   _                  \n ");
-    printf("| | | (_)   | | (_)                 \n ");
-    printf("| |_| |_ ___| |_ _  ___   __ _ ___  \n ");
-    printf("|  _  | / __| __| |/ _ \\ / _\\ / __| \n ");
-    printf("| | | | \\__ \\ |_| | (_) | (_| \\__ \\ \n ");
-    printf("\\_| |_/_|___/\\__|_|\\___/ \\__, |___/ \n ");
-    printf("                          __/ |     \n ");
-    printf("                         |___/      \n ");
+    printf(" _   _ _     _   _                  \n");
+    printf("| | | (_)   | | (_)                 \n");
+    printf("| |_| |_ ___| |_ _  ___   ___   ___  \n");
+    printf("|  _  | / __| __| |/ _ \\ / _ \\ / __| \n");
+    printf("| | | | \\__ \\ |_| | (_) | (_| \\__ \\ \n");
+    printf("\\_| |_/_|___/\\__|_|\\___/ \\__, |___/ \n");
+    printf("                          __/ |     \n");
+    printf("                         |___/      \n");
     printf("\n");
     printf("0                                   255\n");
     printf("<------------------------------------->\n");
@@ -106,7 +106,7 @@ int main()
     printf("\n");
 
 
-    FILE* fichier = fopen("robot_small.pgm","r");
+    FILE* fichier = fopen("tigre.pgm","r");
 
     if (!fichierTrouvable(fichier)){
         printf("Fichier introuvable.\n");
@@ -118,6 +118,8 @@ int main()
     if (!fichierPGM(extensionP, extension2)){
         printf("Le type de fichier est invalide (PGM).\n");
     }
+
+    printf("0  | Fichie ASCII trouve\n");
 
     for (int i=0; i<2; i++){
         fscanf(fichier,"%d",&longueurLargeur[i]);
@@ -177,9 +179,9 @@ int main()
     double time_taken = ((double)t)/CLOCKS_PER_SEC;
     printf("3  | Histogramme genere en %f seconde\n", time_taken);
     printf("\n");
-    printf("4  | Informations relative a l'histogramme:\n");
-    printf("4-1| Nombre total de pixel: %d\n", dim);
+    printf("4  | Informations relatives a l'histogramme:\n");
+    printf("4-1| Nombre total de pixels: %d\n", dim);
     printf("4-2| Nombre de nuances de gris: %d\n", nombreNuance(comptage, 256));
-    printf("4-3| Couleur moyenne: %d\n", couleurMoyenne(comptage, 256));
-    printf("4-4| Couleur la plus presente: %d\n", couleurPlusPresente(comptage, 256));
+    printf("4-3| Nuance moyenne: %d\n", couleurMoyenne(comptage, 256));
+    printf("4-4| Nuance la plus presente: %d (%d)\n", couleurPlusPresente(comptage, 256), comptage[couleurPlusPresente(comptage, 256)]);
 }
