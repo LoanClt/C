@@ -90,6 +90,9 @@ int main()
     int niveauMax;
     int niveauActuel;
     int longueurLargeur[2];
+    int seuil;
+    char reponse;
+    char reponsePos = 'y';
 
     printf(" _   _ _     _   _                  \n");
     printf("| | | (_)   | | (_)                 \n");
@@ -107,6 +110,7 @@ int main()
 
 
     FILE* fichier = fopen("tigre.pgm","r");
+    FILE* imageSeuil = fopen("image_seuillee.pgm","w");
 
     if (!fichierTrouvable(fichier)){
         printf("Fichier introuvable.\n");
@@ -121,11 +125,21 @@ int main()
 
     printf("0  | Fichie ASCII trouve\n");
 
+
     for (int i=0; i<2; i++){
         fscanf(fichier,"%d",&longueurLargeur[i]);
     }
 
     int dim = longueurLargeur[0]*longueurLargeur[1]; // Colone * Ligne
+
+    printf("1  | Voulez vous seuillez l'image ? (y/n) ");
+    scanf("%c", &reponse);
+    if (reponse == reponsePos){
+        char nom[20] = {0};
+        printf("1-1| Quelle est la valeur du seuil ? ");
+        scanf("%d", &seuil);
+        fprintf(imageSeuil, "P2\n%d %d\n255\n",longueurLargeur[0], longueurLargeur[1]);
+    }
 
     fscanf(fichier,"%d",&niveauMax);
 
@@ -138,6 +152,13 @@ int main()
 
     for (int j = 0; j<dim; j++){
         fscanf(fichier,"%d",&niveauActuel);
+        if (reponse == reponsePos){
+            if (niveauActuel > seuil) {
+                fprintf(imageSeuil, " 255 ");
+            } else {
+                fprintf(imageSeuil, " 0 ");
+            }
+        }
         comptage[niveauActuel]++;
     }
 
@@ -146,9 +167,13 @@ int main()
 
 
     char nom[20] = {0};
-    printf("1  | Quel est le nom du fichier dans lequel l'histogramme sera enregistre? (s'il existe deja, il sera remplace)\n");
+    printf("2  | Quel est le nom du fichier dans lequel l'histogramme sera enregistre? ");
     scanf("%s", nom);
-    printf("2  | Creation de l'histogramme a partir du fichier ASCII...\n");
+    if (reponse == reponsePos){
+        printf("3  | Creation de l'histogramme et de l'image seuillee a partir du fichier ASCII...\n");
+    } else {
+        printf("3  | Creation de l'histogramme a partir du fichier ASCII...\n");
+    }
 
 
     clock_t t;
@@ -177,11 +202,11 @@ int main()
 
     t = clock() - t;
     double time_taken = ((double)t)/CLOCKS_PER_SEC;
-    printf("3  | Histogramme genere en %f seconde\n", time_taken);
+    printf("4  | Histogramme genere en %f seconde\n", time_taken);
     printf("\n");
-    printf("4  | Informations relatives a l'histogramme:\n");
-    printf("4-1| Nombre total de pixels: %d\n", dim);
-    printf("4-2| Nombre de nuances de gris: %d\n", nombreNuance(comptage, 256));
-    printf("4-3| Nuance moyenne: %d\n", couleurMoyenne(comptage, 256));
-    printf("4-4| Nuance la plus presente: %d (%d)\n", couleurPlusPresente(comptage, 256), comptage[couleurPlusPresente(comptage, 256)]);
+    printf("5  | Informations relatives a l'histogramme:\n");
+    printf("5-1| Nombre total de pixels: %d\n", dim);
+    printf("5-2| Nombre de nuances de gris: %d\n", nombreNuance(comptage, niveauMax+1));
+    printf("5-3| Nuance moyenne: %d\n", couleurMoyenne(comptage, niveauMax+1));
+    printf("5-4| Nuance la plus presente: %d (%d)\n", couleurPlusPresente(comptage, niveauMax+1), comptage[couleurPlusPresente(comptage, niveauMax+1)]);
 }
