@@ -119,7 +119,7 @@ int main()
     printf("\n");
 
 
-    FILE* fichier = fopen("robot_mall.pgm","r");
+    FILE* fichier = fopen("tigre.pgm","r");
     FILE* imageSeuil = fopen("image_seuillee.pgm","w");
 
     /*Vérifie si le fichier existe et informe l'utilisateur*/
@@ -219,7 +219,7 @@ int main()
 
 
         FILE* diagramme = fopen(nom,"w");
-        FILE* abscisse = fopen("svp.pgm","r");
+        FILE* abscisse = fopen("depedency.pgm","r");
         if (!fichierTrouvable(abscisse)){
             printf("\n/!\\| Fichier pour afficher correctement les axes absent !\n\n");
             fprintf(diagramme, "P2\n%d %d\n255\n",colone_diag + 120, niveauMax + 1); /*Si pas de fichier pour l'abs, on ajoute pas 120 pixels à l'image (lignes)*/
